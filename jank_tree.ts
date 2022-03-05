@@ -7,7 +7,10 @@
 export type TreeNodeTuple = [string, TreeNodeTuple[]];
 
 export class TreeNode {
+  parent: TreeNode;
+
   constructor(readonly data = 'defaultData', readonly children: TreeNode[] = []) {
+    children.forEach(child => child.parent = this);
   }
 
   toString() {
