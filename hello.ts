@@ -34,8 +34,7 @@ const a = new TreeNode('a', [b, c]);
 
 // Shallow printing of depth 2 with stringify. This isn't the same on web?
 // Anyhoo, stringify is great for formatting the deep list tree
-console.log('ray test tree as deep lists:\n',
-  JSON.stringify(a.toLists(), null, 2));
+console.log('ray test tree as deep tuple:\n', a.toString());
 
 console.log('ray test interface example is: ', interfaceExample);
 
