@@ -32,6 +32,10 @@ const b = new TreeNode('b', [d, e])
 const c = new TreeNode('c', [f]);
 const a = new TreeNode('a', [b, c]);
 
+console.assert(a.lca(a) === a);
+console.assert(d.lca(e) === b);
+console.assert(d.lca(f) === a);
+
 // Shallow printing of depth 2 with stringify. This isn't the same on web?
 // Anyhoo, stringify is great for formatting the deep list tree
 console.log('ray test tree as deep tuple:\n', a.toString());

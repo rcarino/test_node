@@ -7,10 +7,33 @@
 export type TreeNodeTuple = [string, TreeNodeTuple[]];
 
 export class TreeNode {
-  parent: TreeNode;
+  parent: TreeNode|undefined;
 
   constructor(readonly data = 'defaultData', readonly children: TreeNode[] = []) {
     children.forEach(child => child.parent = this);
+  }
+
+  lca(other: TreeNode): TreeNode|undefined {
+    const myAncestors = new Set<TreeNode>();
+    const othersAncestors = new Set<TreeNode>();
+    let myCur: TreeNode|undefined = this;
+    let otherCur: TreeNode|undefined = other;
+    while (myCur || otherCur) {
+      if (myCur) {
+        myAncestors.add(myCur);
+      }
+      if (otherCur) {
+        othersAncestors.add(otherCur);
+      }
+      if (otherCur && myAncestors.has(otherCur)) {
+        return otherCur;
+      }
+      if (myCur && othersAncestors.has(myCur)) {
+        return myCur;
+      }
+      [myCur, otherCur] = [myCur?.parent, otherCur?.parent];
+    }
+    return undefined;
   }
 
   toString() {
