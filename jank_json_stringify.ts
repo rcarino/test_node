@@ -1,4 +1,4 @@
-function jankSONStringify(obj: object): string {
+export function jankSONStringify(obj: object): string {
   if (obj === null) {
     return 'null';
   } else if (obj === undefined) {
@@ -17,8 +17,3 @@ function jankSONStringify(obj: object): string {
     return `{${keyVals}}`
   }
 }
-
-const input = {'a': {'deepObjVal': 2}, 'b': 3, 'c': ['d', {'e': 'f'}]};
-console.assert(jankSONStringify(input)
-  === `{'a': {'deepObjVal': 2}, 'b': 3, 'c': ['d', {'e': 'f'}]}`,
-  jankSONStringify(input));
