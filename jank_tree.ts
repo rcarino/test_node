@@ -7,24 +7,25 @@
 export type TreeNodeTuple = [string, TreeNodeTuple[]];
 
 export class TreeNode {
+  // Benefits of preferring undefined as much as feasible: no default null
+  // assignment on init, optional chaining returns undefined, so less potential
+  // type casting.
   parent: TreeNode|undefined;
 
   constructor(readonly data = 'defaultData', readonly children: TreeNode[] = []) {
     children.forEach(child => child.parent = this);
   }
 
-  lca(other: TreeNode): TreeNode|undefined {
+  lca(other: TreeNode): TreeNode|null {
     const myAncestors = new Set<TreeNode>();
     const othersAncestors = new Set<TreeNode>();
     let myCur: TreeNode|undefined = this;
     let otherCur: TreeNode|undefined = other;
+    // Scanning both paths in lock-step allows for early termination despite
+    // still being O(treeNodes) worst case
     while (myCur || otherCur) {
-      if (myCur) {
-        myAncestors.add(myCur);
-      }
-      if (otherCur) {
-        othersAncestors.add(otherCur);
-      }
+      myCur && myAncestors.add(myCur);
+      otherCur && othersAncestors.add(otherCur);
       if (otherCur && myAncestors.has(otherCur)) {
         return otherCur;
       }
@@ -33,7 +34,7 @@ export class TreeNode {
       }
       [myCur, otherCur] = [myCur?.parent, otherCur?.parent];
     }
-    return undefined;
+    return null;
   }
 
   toString() {
